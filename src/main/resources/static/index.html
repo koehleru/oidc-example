@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OIDC Adapter Poc</title>
+    <script src="keycloak.js"></script>
+    <script>
+        function initKeycloak() {
+            const keycloak = new Keycloak({
+                url: 'http://127.0.0.1:8180/auth/',
+                realm: 'master',
+                clientId: 'account'
+            });
+            keycloak.init({
+                checkLoginIframe: false
+            }).then(function(authenticated){
+                if (!authenticated) {
+                    return keycloak.login({idpHint: "oidc"})
+                } else {
+                    return true;
+                }
+            }).then((auth) => {
+                if (!auth) {
+                    alert('not authenticated');
+                } else {
+                    console.log("access-token", keycloak.token);
+                }
+            }).catch(error => {
+                console.log(error)
+                alert('failed to initialize');
+            });
+        }
+    </script>
+</head>
+<body onload="initKeycloak()">
+    <h2>Poc</h2>
+</body>
+</html>

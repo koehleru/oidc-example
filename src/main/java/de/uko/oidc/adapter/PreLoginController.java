@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @AllArgsConstructor
 @RestController
@@ -18,7 +19,7 @@ public class PreLoginController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping
-    public ResponseEntity<String> preAuth(final HttpServletRequest request) {
+    public RedirectView preAuth(final HttpServletRequest request) {
         var token = new UsernamePasswordAuthenticationToken("user", "password");
         var authentication = authenticationManager.authenticate(token);
 
@@ -28,6 +29,6 @@ public class PreLoginController {
         var session = request.getSession();
         session.setAttribute("SPRING_SECURITY_CONTEXT", sc);
 
-        return ResponseEntity.ok().build();
+        return new RedirectView("http://localhost:8080/index.html");
     }
 }

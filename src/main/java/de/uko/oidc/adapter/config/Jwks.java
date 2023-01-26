@@ -9,10 +9,7 @@ import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.ECKey;
-import com.nimbusds.jose.jwk.OctetSequenceKey;
-import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.*;
 
 /**
  * @author Joe Grandja
@@ -30,6 +27,7 @@ public final class Jwks {
         // @formatter:off
         return new RSAKey.Builder(publicKey)
                 .privateKey(privateKey)
+                .keyUse(KeyUse.SIGNATURE)
                 .keyID(UUID.randomUUID().toString())
                 .build();
         // @formatter:on

@@ -38,7 +38,7 @@ public class SecurityConfig {
     @Bean
     @Order(0)
     public SecurityFilterChain preAuthSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/api/preauth")
+        http.securityMatcher("/api/preauth", "/index*", "/keycloak*")
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
@@ -97,6 +97,7 @@ public class SecurityConfig {
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc")
                 .redirectUri("http://127.0.0.1:8080/authorized")
                 .redirectUri("http://127.0.0.1:8180/realms/master/broker/oidc/endpoint")
+                .redirectUri("http://127.0.0.1:8180/auth/realms/master/broker/oidc/endpoint")
                 .redirectUri("https://oidcdebugger.com/debug")
                 .scope(OidcScopes.OPENID)
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
@@ -120,7 +121,7 @@ public class SecurityConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
-                .issuer("http://localhost:8080")
+                .issuer("http://192.168.178.42:8080")
                 .build();
     }
 
