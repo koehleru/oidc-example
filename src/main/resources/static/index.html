@@ -24,6 +24,7 @@
                     alert('not authenticated');
                 } else {
                     console.log("access-token", keycloak.token);
+                    document.getElementById("token").textContent = keycloak.token;
                 }
             }).catch(error => {
                 console.log(error)
@@ -33,6 +34,7 @@
     </script>
 </head>
 <body onload="initKeycloak()">
-    <h2>Poc</h2>
+    <h3>OIDC Adapter Poc</h3>
+    <span id="token"></span>
 </body>
 </html>
